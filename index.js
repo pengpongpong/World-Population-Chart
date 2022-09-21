@@ -51,7 +51,10 @@ let mouseover = function(d) {
 
 let mousemove = function(e) {
   tooltip
-    .html((e.toElement.__data__[1]/10000000000).toFixed(3) + " billion")
+    .html(
+      `Year:\u00A0\u00A0 <strong>${e.toElement.__data__[0]}</strong><br> 
+      Count: <strong>${(e.toElement.__data__[1]/10000000000).toFixed(3)}</strong> billion`
+      )
     .style("left", `${e.offsetX+40}px`)
     .style("top", `${e.offsetY-7}px`)
 }
@@ -69,7 +72,7 @@ let mouseleave = function(d) {
 const svg = d3.select("#chart")
       .append("svg")
       .attr("viewbox", [0, 0, width, height])
-      .attr("width", width)
+      .attr("width", "100%")
       .attr("height", height)
 
 svg.append("g")
@@ -95,7 +98,9 @@ svg.append("g")
 const xAxis = g => g
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .attr("font-weight", "bold")
-        .call(d3.axisBottom(x).tickSizeOuter(0));
+        .call(d3.axisBottom(x)
+        .tickFormat((d, i) => {if(i%2 === 0){return d}})
+        .tickSizeOuter(0));
 svg.append("g").call(xAxis);
 
 // y-axis label with outer tick
