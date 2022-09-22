@@ -44,7 +44,6 @@ let mouseover = function(d) {
     .style("opacity", 1)
   d3.select(this)
    .style("stroke", "black")
-   .style("opacity", 1)
    .style("cursor", "crosshair")
    .style("fill", "#295D8A")
 }
@@ -64,7 +63,6 @@ let mouseleave = function(d) {
     .style("opacity", 0)
   d3.select(this)
     .style("stroke", "none")
-    .style("opacity", 1)
     .style("fill", "steelblue")
   }
 
@@ -88,40 +86,26 @@ svg.append("g")
       .on("mousemove", mousemove)
       .on("mouseleave", mouseleave)
 
-// x-axis label with outer tick
-// svg.append("g")
-//   .attr("transform", `translate(0, ${height - margin.bottom})`)
-//   .attr("font-weight", "bold")
-//   .call(d3.axisBottom(x));
 
 // x-axis label without outer tick
-const xAxis = g => g
-        .attr("transform", `translate(0, ${height - margin.bottom})`)
-        .attr("font-weight", "bold")
-        .call(d3.axisBottom(x)
-        .tickFormat((d, i) => {if(i%2 === 0){return d}})
-        .tickSizeOuter(0));
-svg.append("g").call(xAxis);
-
-// y-axis label with outer tick
-// svg.append("g")
-//   .attr("transform", `translate(${margin.left}, 0)`)
-//   .attr("font-weight", "bold")
-//   .call(d3.axisLeft(y));
+svg.append("g")
+    .attr("transform", `translate(0, ${height - margin.bottom})`)
+    .attr("font-weight", "bold")
+    .call(d3.axisBottom(x)
+    .tickFormat((d, i) => {if(i%2 === 0){return d}})
+    .tickSizeOuter(0));
 
 // y-axis label without outer tick
-const yAxis = g => g
-        .attr("transform", `translate(${margin.left}, 0)`)
-        .attr("font-weight", "bold")
-        .call(d3.axisLeft(y).tickSizeOuter(0))
-svg.append("g").call(yAxis);
+svg.append("g")
+    .attr("transform", `translate(${margin.left}, 0)`)
+    .attr("font-weight", "bold")
+    .call(d3.axisLeft(y).tickSizeOuter(0))
 
 // y-axis title
-const yTitle = g => g.append("text")
-              .attr("font-family", "sans-serif")
-              .attr("font-size", 10)
-              .attr("font-weight", "bold")
-              .attr("y", 10)
-              .text("World Population Count in Billion")
-              
-svg.call(yTitle);
+svg.append("text")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", 10)
+    .attr("font-weight", "bold")
+    .attr("y", 10)
+    .attr("x", 5)
+    .text("World Population Count in Billion")
