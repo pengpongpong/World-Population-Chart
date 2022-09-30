@@ -54,8 +54,8 @@ let mousemove = function(e) {
       `Year:\u00A0\u00A0 <strong>${e.toElement.__data__[0]}</strong><br> 
       Count: <strong>${(e.toElement.__data__[1]/10000000000).toFixed(3)}</strong> billion`
       )
-    .style("left", `${e.offsetX+40}px`)
-    .style("top", `${e.offsetY-7}px`)
+    .style("left", `${e.pageX + 15}px`)
+    .style("top", `${e.pageY}px`)
 }
 
 let mouseleave = function(d) {
@@ -74,7 +74,6 @@ const svg = d3.select("#chart")
       .attr("height", height)
 
 svg.append("g")
-      .attr("fill", "steelblue")
   .selectAll("rect")
   .data(data)
   .join("rect")
@@ -82,10 +81,10 @@ svg.append("g")
       .attr("height", d => y(d3.min(data, d => d[1]/10000000000)) - y(d[1]/10000000000 + 0.1))
       .attr("x", d => x(d[0]))
       .attr("y", d => y(d[1]/10000000000))
+      .attr("fill", "steelblue")
       .on("mouseover", mouseover)
       .on("mousemove", mousemove)
       .on("mouseleave", mouseleave)
-
 
 // x-axis label without outer tick
 svg.append("g")
